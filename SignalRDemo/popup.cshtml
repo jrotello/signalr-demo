@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>SignalR Popup</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <style>
+            .center-spinner {
+                position: absolute; 
+                width: 64px; 
+                height: 64px; 
+                left: 50%; 
+                top: 50%; 
+                margin: -32px 0 0 -32px;
+                display: block;
+            }
+        </style>
+    </head>
+    <body style="padding: 0; margin: 0">
+        <i class="center-spinner fa fa-4x fa-spinner fa-pulse"></i>    
+
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script src="~/Scripts/jquery.signalR-2.1.2.min.js"></script>
+        <script src="~/signalr/hubs"></script>
+        <script>
+            $(document).ready(function () {
+                var getQueryStringParameter = function (urlParameterKey) {
+                    var qs = document.location.search.substring(1);
+                    var params = qs.split('&');
+                    for (var i = 0; i < params.length; i = i + 1) {
+                        var singleParam = params[i].split('=');
+                        if (singleParam[0] == urlParameterKey)
+                            return decodeURIComponent(singleParam[1]);
+                    }
+
+                    return undefined;
+                };
+
+                var parentId = getQueryStringParameter('parentId');
+                var token = document.location.hash.substring(1);
+
+                $.connection.hub.start()
+                    .done(function () {
+                        var hub = $.connection.popupCommunicationHub;
+                        hub.server.sendToken(parentId, token);
+                        setTimeout(window.close, 1500);
+                    })
+                    .fail(function () { console.log('Could not Connect!'); });
+            });
+        </script>
+    </body>
+</html>

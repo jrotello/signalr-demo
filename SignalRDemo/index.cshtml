@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>SignalR Demo</title>
+    </head>
+<body>
+    <h1>Generated Token</h1>
+    <h2 id="token">@Guid.NewGuid().ToString("N")</h2>
+
+    <h1>SignalR Token</h1>
+    <h2 id="signalrToken"></h2>
+
+    <h1>Connection Id</h1>
+    <h2 id="connectionId"></h2>
+
+    <button id="popupBtn">Open Popup</button>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.1.2.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+
+    <script src="~/App/app.js"></script>
+</body>
+</html>
